@@ -1,28 +1,36 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_article, only: %i[show edit update destroy]
 
   def index
+    @agendas = Agenda.all
     @articles = Article.all
   end
 
   def show
+    @comments = @article.comments
+    @comment = @article.comments.build
+    @working_team = @article.team
+    change_keep_team(current_user, @working_team)
   end
 
   def new
-    @team = Team.find(params[:team_id])
-    @article = Article.new
+    @agenda = Agenda.find(params[:agenda_id])
+    @team = @agenda.team
+    @article = @agenda.articles.build
   end
 
   def edit
+    change_keep_team(current_user, @article.team)
   end
 
   def create
-    @team = Team.find(params[:team_id])
-    @article = @team.articles.build(article_params)
-    @article.user = current_user
-    if @article.save
-      redirect_to article_url(@article), notice: 'Article was successfully created.'
+    agenda = Agenda.find(params[:agenda_id])
+    article = agenda.articles.build(article_params)
+    article.user = current_user
+    article.team_id = agenda.team_id
+    if article.save
+      redirect_to article_url(article), notice: I18n.t('views.messages.create_article')
     else
       render :new
     end
@@ -30,7 +38,7 @@ class ArticlesController < ApplicationController
 
   def update
     if @article.update(article_params)
-      redirect_to @article, notice: 'Article was successfully updated.'
+      redirect_to @article, notice: I18n.t('views.messages.update_article')
     else
       render :edit
     end
@@ -38,7 +46,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article.destroy
-    redirect_to articles_url, notice: 'Article was successfully destroyed.'
+    redirect_to dashboard_url
   end
 
   private
@@ -48,6 +56,6 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.fetch(:article, {}).permit(:title, :content)
+    params.fetch(:article, {}).permit %i[title content image image_cache]
   end
 end
