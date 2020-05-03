@@ -52,9 +52,12 @@ class TeamsController < ApplicationController
   end
 
   def change_owner
-    selected_user = Assign.find(params[:format])
-    @team.owner_id = selected_user.user_id
+    pre_owner = @team.owner
+    selected_assign_user = Assign.find(params[:format])
+    @team.owner_id = selected_assign_user.user_id
     @team.update(team_params)
+    new_owner = User.find(@team.owner_id)
+    TeamMailer.team_mail(pre_owner, new_owner, @team).deliver
     redirect_to @team, notice: I18n.t('views.messages.change_owner')
   end
 
