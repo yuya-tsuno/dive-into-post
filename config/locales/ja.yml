@@ -206,6 +206,7 @@ ja:
   views:
     messages:
       create_agenda: 'アジェンダ作成に成功しました！'
+      destroy_agenda: 'アジェンダを削除しました。'
       create_article: '記事作成に成功しました！'
       update_article: '記事更新に成功しました！'
       assigned: 'アサインしました！'
@@ -237,7 +238,8 @@ ja:
       team_build: 'チーム作成'
       team_build2: 'チームを作成する'
       select_team: 'チーム選択'
-      create_agenda: 'アジェンダ作成'
+      # create_agenda: 'アジェンダ作成'
+      # destroy_agenda: 'アジェンダ削除'
       input_agenda_title: 'タイトル入力'
       input_team_name: 'チーム名を入力してください'
       recent_posts: '最近投稿された記事'
