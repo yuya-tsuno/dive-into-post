@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
     if article.save
       redirect_to article_url(article), notice: I18n.t('views.messages.create_article')
     else
-      render :new
+      redirect_to new_agenda_article_path, notice: I18n.t('views.messages.failed_to_post')
     end
   end
 

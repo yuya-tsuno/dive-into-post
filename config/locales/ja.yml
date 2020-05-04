@@ -205,7 +205,8 @@ ja:
     pm: 午後
   views:
     messages:
-      create_agenda: 'アジェンダ作成に成功しました！'
+      created_agenda: 'アジェンダ作成に成功しました！'
+      destroyed_agenda: 'アジェンダを削除しました。'
       create_article: '記事作成に成功しました！'
       update_article: '記事更新に成功しました！'
       assigned: 'アサインしました！'
@@ -215,6 +216,7 @@ ja:
       delete_member: 'メンバーを削除しました。'
       cannot_delete_member_4_some_reason: 'なんらかの原因で、削除できませんでした。'
       failed_to_post: '投稿できませんでした...'
+      not_have_delete_rights: 'あなたに削除の権限はありません。'
       create_team: 'チーム作成に成功しました！'
       failed_to_save_team: '保存に失敗しました、、'
       update_team: 'チーム更新に成功しました！'
@@ -238,6 +240,7 @@ ja:
       team_build2: 'チームを作成する'
       select_team: 'チーム選択'
       create_agenda: 'アジェンダ作成'
+      destroy_agenda: 'アジェンダ削除'
       input_agenda_title: 'タイトル入力'
       input_team_name: 'チーム名を入力してください'
       recent_posts: '最近投稿された記事'
