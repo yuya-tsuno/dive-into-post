@@ -15,15 +15,20 @@ class AgendasController < ApplicationController
     @agenda.team = Team.friendly.find(params[:team_id])
     current_user.keep_team_id = @agenda.team.id
     if current_user.save && @agenda.save
-      redirect_to dashboard_url, notice: I18n.t('views.messages.create_agenda')
+      redirect_to dashboard_url, notice: I18n.t('views.messages.created_agenda')
     else
-      render :new
+      redirect_to team_url(@agenda.team_id), notice: I18n.t('views.messages.failed_to_post')
     end
   end
 
   def destroy
-    @agenda.destroy
-    redirect_to dashboard_url, notice: I18n.t('views.messages.destroy_agenda')
+    team = Team.find(@agenda.team_id)
+    if current_user.id == @agenda.user_id || current_user.id == team.owner_id
+      @agenda.destroy
+      redirect_to dashboard_url, notice: I18n.t('views.messages.destroyed_agenda')
+    else
+      redirect_to team_url(@agenda.team_id), notice: I18n.t('views.messages.not_have_delete_rights')
+    end
   end
 
   private
