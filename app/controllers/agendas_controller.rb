@@ -25,6 +25,11 @@ class AgendasController < ApplicationController
     team = Team.find(@agenda.team_id)
     if current_user.id == @agenda.user_id || current_user.id == team.owner_id
       @agenda.destroy
+
+      @agenda.team.assigns.each do |assign|
+        AgendaMailer.agenda_mail(assign, current_user, @agenda).deliver
+      end
+
       redirect_to dashboard_url, notice: I18n.t('views.messages.destroyed_agenda')
     else
       redirect_to team_url(@agenda.team_id), notice: I18n.t('views.messages.not_have_delete_rights')
