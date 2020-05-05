@@ -34,7 +34,9 @@
               <i class="fa fa-circle-o nav-icon"></i>
                 <span><%= agenda.title %></span>
                 <span><i href="#" class="right fa fa-angle-left float-right"></i></span>
-                <span><%= link_to(content_tag(:i, nil, class: 'fa fa-trash float-right mr-2'), agenda_path(agenda), method: :delete) %></span>
+                <% if current_user.id == agenda.user_id || current_user.id == @team.owner_id %>
+                  <span><%= link_to(content_tag(:i, nil, class: 'fa fa-trash float-right mr-2'), agenda_path(agenda), method: :delete) %></span>
+                <% end %>
             </p>
             <ul class="nav nav-treeview" style="display: block;">
               <% agenda.articles.each do |article| %>
