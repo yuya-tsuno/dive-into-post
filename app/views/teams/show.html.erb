@@ -10,7 +10,9 @@
               <%= image_tag default_img(@team.icon_url), class: 'img' %><br>
               <%= @team.name %>
             </div>
-            <%= link_to I18n.t('views.messages.edit_team'), edit_team_path(@team), class: 'btn btn-success btn-block mt-3' %>
+            <% if current_user.id == @team.owner.id %>
+              <%= link_to I18n.t('views.messages.edit_team'), edit_team_path(@team), class: 'btn btn-success btn-block mt-3' %>
+            <% end %>
           </div>
 
           <div class="col-md-8">
@@ -41,7 +43,9 @@
                     <tr>
                       <td><%= image_tag 'default.jpg', size: '40x40' %></td>
                       <td><%= assign.user.email %></td>
-                      <td><%= link_to I18n.t('views.button.delete'), team_assign_path(@team, assign), method: :delete, class: 'btn btn-sm btn-danger' %></td>
+                      <% if current_user.id == @team.owner_id || current_user.id == assign.user_id %>
+                        <td><%= link_to I18n.t('views.button.delete'), team_assign_path(@team, assign), method: :delete, class: 'btn btn-sm btn-danger' %></td>
+                      <% end %>
                       <% if (current_user.id == @team.owner.id) && ( current_user.id != assign.user.id )%>
                         <td><%= link_to I18n.t('views.button.change_owner'), change_owner_team_path(@team, assign),
                          method: :patch, data: { confirm: 'チームのオーナー権限を移動しますか？' }, class: 'btn btn-sm btn-primary' %></td>
